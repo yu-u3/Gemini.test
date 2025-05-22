@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini - お問い合わせ</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="https://www.google.com/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">Gemini</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">ホーム</a></li>
+                    <li><a href="features.html">主な機能</a></li>
+                    <li><a href="use_cases.html">利用例</a></li>
+                    <li><a href="contact.html">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>お問い合わせ</h1>
+                <p>Geminiに関するご質問やご相談は、こちらからお気軽にお問い合わせください。</p>
+            </div>
+        </section>
+
+        <section class="contact-form-section">
+            <div class="container">
+                <form id="contactForm" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">お名前:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">メールアドレス:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">件名:</label>
+                        <input type="text" id="subject" name="subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">お問い合わせ内容:</label>
+                        <textarea id="message" name="message" rows="8" required></textarea>
+                    </div>
+                    <button type="button" id="copyButton" class="button">お問い合わせ内容を簡単コピー</button>
+                    <div id="copyStatus" style="margin-top: 10px; color: #1abc9c; font-weight: bold; text-align: center;"></div>
+                </form>
+
+                <p class="contact-info">
+                    入力内容をコピーしたら、以下のメールアドレス宛てに送信してください。<br>
+                    ご不明な点がございましたら、以下のメールアドレスまで直接ご連絡いただくことも可能です。<br><br>
+                    **【画像添付をご希望の場合】**<br>
+                    コピーした内容をメール本文に貼り付けた後、**メールに画像を直接添付して送信してください。**<br>
+                    Email: <a href="Email@001.com">Email@001.com</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ←著作権の表示. All Rights Reserved.(このサイトは架空のものであり、許可なくURLやリンクを使用することを禁じます。)</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            const copyStatus = document.getElementById('copyStatus');
+
+            // 必須項目が入力されているかチェック
+            if (!name || !email || !message) {
+                copyStatus.textContent = '必須項目（お名前、メールアドレス、お問い合わせ内容）を入力してください。';
+                copyStatus.style.color = '#e74c3c'; // エラー表示のため赤色に
+                return;
+            }
+
+            const formattedText = `
+お問い合わせ内容
+
+---
+お名前: ${name}
+メールアドレス: ${email}
+件名: ${subject || '件名なし'}
+お問い合わせ内容:
+${message}
+---
+
+`;
+
+            // クリップボードにコピー
+            navigator.clipboard.writeText(formattedText)
+                .then(() => {
+                    copyStatus.textContent = '内容がクリップボードにコピーされました！';
+                    copyStatus.style.color = '#1abc9c'; // 成功表示のため緑色に
+                    // フォームをリセット（任意）
+                    document.getElementById('contactForm').reset();
+                })
+                .catch(err => {
+                    console.error('コピーに失敗しました:', err);
+                    copyStatus.textContent = 'コピーに失敗しました。お手数ですが手動でコピーしてください。';
+                    copyStatus.style.color = '#e74c3c'; // エラー表示のため赤色に
+                });
+        });
+    </script>
+</body>
+</html>
